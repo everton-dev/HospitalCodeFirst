@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hospital.Infraestructure.Repositorios
 {
@@ -42,6 +40,15 @@ namespace Hospital.Infraestructure.Repositorios
 
         public ICollection<ConsultaMedica> ConsultarTodos() =>
             (from p in _db.ConsultaMedicas.AsNoTracking() select p).ToList();
+
+        public int Excluir(int id)
+        {
+            var consulta = _db.ConsultaMedicas.Find(id);
+
+            _db.ConsultaMedicas.Remove(consulta);
+
+            return _db.SaveChanges();
+        }
 
         public int Inserir(ConsultaMedica entity)
         {

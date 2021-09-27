@@ -47,6 +47,15 @@ namespace Hospital.Infraestructure.Repositorios
         public ICollection<Paciente> ConsultarTodos() =>
             (from p in _db.Pacientes.AsNoTracking() select p).ToList();
 
+        public int Excluir(int id)
+        {
+            var paciente = _db.Pacientes.Find(id);
+
+            _db.Pacientes.Remove(paciente);
+
+            return _db.SaveChanges();
+        }
+
         public int Inserir(Paciente entity)
         {
             _db.Pacientes.Add(entity);

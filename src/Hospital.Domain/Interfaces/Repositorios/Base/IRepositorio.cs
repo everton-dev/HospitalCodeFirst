@@ -6,6 +6,7 @@ namespace Hospital.Domain.Interfaces.Repositorios.Base
     {
         int Inserir(TEntity entity);
         int Alterar(TEntity entity);
+        int Excluir(int id);
         TEntity ConsultarPorId(int id);
         ICollection<TEntity> ConsultarTodos();
     }

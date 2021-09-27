@@ -33,6 +33,15 @@ namespace Hospital.Infraestructure.Repositorios
         public ICollection<TipoExame> ConsultarTodos() =>
             (from p in _db.TipoExames.AsNoTracking() select p).ToList();
 
+        public int Excluir(int id)
+        {
+            var tipoExame = _db.TipoExames.Find(id);
+
+            _db.TipoExames.Remove(tipoExame);
+            
+            return _db.SaveChanges();
+        }
+
         public int Inserir(TipoExame entity)
         {
             _db.TipoExames.Add(entity);

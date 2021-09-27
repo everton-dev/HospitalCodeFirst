@@ -6,22 +6,23 @@ namespace Hospital.UI.MVC.Controllers
 {
     public class TipoExameController : Controller
     {
-        private readonly ITipoExameServico _tipoExameServico;
-        public TipoExameController(ITipoExameServico tipoExameServico)
+        private readonly ITipoExameServico _servico;
+
+        public TipoExameController(ITipoExameServico servico)
         {
-            _tipoExameServico = tipoExameServico;
+            _servico = servico;
         }
 
         // GET: TipoExameController
         public ActionResult Index()
         {
-            var result = _tipoExameServico.ConsultarTodos();
+            var result = _servico.ConsultarTodos();
             return View(result);
         }
 
         // GET: TipoExameController/Details/5
         public ActionResult Details(int id) =>
-            View(_tipoExameServico.ConsultarPorId(id));
+            View(_servico.ConsultarPorId(id));
 
         // GET: TipoExameController/Create
         public ActionResult Create()
@@ -36,7 +37,7 @@ namespace Hospital.UI.MVC.Controllers
         {
             try
             {
-                _tipoExameServico.Inserir(tipoExame);
+                _servico.Inserir(tipoExame);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -47,7 +48,7 @@ namespace Hospital.UI.MVC.Controllers
 
         // GET: TipoExameController/Edit/5
         public ActionResult Edit(int id) =>
-            View(_tipoExameServico.ConsultarPorId(id));
+            View(_servico.ConsultarPorId(id));
 
         // POST: TipoExameController/Edit/5
         [HttpPost]
@@ -56,7 +57,26 @@ namespace Hospital.UI.MVC.Controllers
         {
             try
             {
-                _tipoExameServico.Alterar(tipoExame);
+                _servico.Alterar(tipoExame);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Delete(int id) =>
+            View(_servico.ConsultarPorId(id));
+
+        // POST: TipoExameController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(TipoExame tipoExame)
+        {
+            try
+            {
+                _servico.Excluir(tipoExame.Id);
                 return RedirectToAction(nameof(Index));
             }
             catch

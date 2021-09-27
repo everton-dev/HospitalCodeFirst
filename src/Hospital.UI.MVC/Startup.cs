@@ -1,3 +1,4 @@
+using AutoMapper;
 using Hospital.CrossCutting;
 using Hospital.Infraestructure.Data;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,12 @@ namespace Hospital.UI.MVC
 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            services.AddSingleton(mapperConfig.CreateMapper());
 
             services.InjecaoRepositorios();
             services.InjecaoServicos();

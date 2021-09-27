@@ -32,6 +32,9 @@ namespace Hospital.Business.Servicos
         public ICollection<ConsultaMedica> ConsultarTodos() =>
             _repositorio.ConsultarTodos();
 
+        public int Excluir(int id) =>
+            _repositorio.Excluir(id);
+
         public int Inserir(ConsultaMedica entity) =>
             _repositorio.Inserir(entity);
 
