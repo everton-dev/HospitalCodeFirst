@@ -37,12 +37,26 @@ namespace Hospital.Infraestructure.Repositorios
                 .ThenInclude(c => c.TipoExame)
             .FirstOrDefault(p => p.Cpf.Equals(cpf));
 
+        public Paciente ConsultarPorCpfeNome(string cpf, string nome) =>
+            _db.Pacientes.AsNoTracking()
+                .Include(p => p.Consultas)
+                .ThenInclude(c => c.Exame)
+                .ThenInclude(c => c.TipoExame)
+            .FirstOrDefault(p => p.Cpf.Equals(cpf) && p.Nome.Contains(nome));
+
         public Paciente ConsultarPorId(int id) =>
             _db.Pacientes.AsNoTracking()
                 .Include(p => p.Consultas)
                 .ThenInclude(c => c.Exame)
                 .ThenInclude(c => c.TipoExame)
             .FirstOrDefault(p => p.Id.Equals(id));
+
+        public Paciente ConsultarPorNome(string nome) =>
+            _db.Pacientes.AsNoTracking()
+                .Include(p => p.Consultas)
+                .ThenInclude(c => c.Exame)
+                .ThenInclude(c => c.TipoExame)
+            .FirstOrDefault(p => p.Nome.Contains(nome));
 
         public ICollection<Paciente> ConsultarTodos() =>
             (from p in _db.Pacientes.AsNoTracking() select p).ToList();
